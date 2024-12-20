@@ -29,7 +29,6 @@ type
     tx_nbits*: uint8
     rx_nbits*: uint8
     word_delay_usecs*: uint8
-    pad*: uint8
 
 proc SPI_IOC_MESSAGE*(count: int): uint {.importc: "SPI_IOC_MESSAGE".}
 
@@ -48,11 +47,12 @@ proc `=copy`(dest: var Spidev; source: Spidev) {.error.}
 proc `=destroy`*(self: var Spidev) =
   discard posix.close(self.fd)
 
+
 proc spiOpen*(path: string; config: var SpiConfig): Spidev =
-  var fd: cint
+  result.fd = -1
 
   # Open block device
-  fd = posix.open(path.cstring, O_RDWR)
+  let fd = posix.open(path.cstring, O_RDWR)
   if fd < 0:
     return
 
