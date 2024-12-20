@@ -1,0 +1,32 @@
+/dts-v1/;
+/plugin/;
+
+/ {
+    compatible = "brcm,bcm2708";
+
+    fragment@0 {
+        target-path = "/";
+        __overlay__ {
+            blinkt {
+                compatible = "spi-gpio";
+                #address-cells = <0x1>;
+                #size-cells = <0x0>;
+                ranges;
+                status = "okay";
+
+                sck-gpios = <&gpio 24 0>;
+                miso-gpios = <>;
+                mosi-gpios = <&gpio 23 0>;
+                cs-gpios = <&gpio 25 1>; // have to be set for probe
+                num-chipselects = <0>;
+
+                spidev@0 {
+                    compatible = "spidev";
+                    reg = <0>;
+                    status = "okay";
+                    spi-max-frequency = <10000000>;
+                };
+            };
+        };
+    };
+};
