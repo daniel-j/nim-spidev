@@ -1,4 +1,5 @@
 # example to run on Pimoroni Blinkt!
+# compile and load dtoverlay blinkt from overlays folder first!
 
 import std/times
 import std/os
